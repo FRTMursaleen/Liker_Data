@@ -1,0 +1,138 @@
+{% extends 'base.html'  %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+{%load staticfiles%}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="POST" style="display:inline-block;">
+            {%csrf_token%}
+            <!--<div id='form-errors'>{{ form_errors }}</div>-->
+
+            <!--{{form|crispy}}-->
+            <table>
+                <tr>
+                    <th style="text-align:center;"><h3>Keywords </h3></th>
+                    <th style="text-align:center;"><h3>Count </h3></th>
+                </tr>
+
+                <tr>
+
+                    <td>
+                       <input id="Fav_keywords" type="text" name="Fav_keywords" maxlength="100" placeholder="Enter Keywords.." style="border-color:blue; border-radius:22px;" required  />
+
+                    </td>
+
+                    <td>
+                        <input id="num_limits" type="text" name="num_limits" maxlength="100" placeholder="Enter number limit e.g 10.." style="border-color: blue;border-radius: 22px;margin-left: 50px;"  required />
+                    </td>
+
+                    <td>
+                        <input type="submit" class="btn btn-primary" value="Submit" style="width: 112px;border-radius:22px; margin-left: 70px;">
+
+                    </td>
+
+                    <!--<td>-->
+                        <!--<form>-->
+                            <!--&lt;!&ndash;<label class="checkbox-list__item">&ndash;&gt;-->
+
+                            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<input type="checkbox" >&ndash;&gt;-->
+                            <!--{% if flag == True %}-->
+                            <!--<label class="checkbox-list__item">-->
+
+                            <!--</label>-->
+                            <!--<input type="checkbox" checked>-->
+                             <!--{% elif flag == False%}-->
+                            <!--<p>{{flag}}</p>-->
+                        <!--</form>-->
+                    <!--</td>-->
+
+                    <!--{% endif %}-->
+
+                </tr>
+            <!--<label for="Fav_keywords">Keywords: </label>-->
+            <!--<input id="Fav_keywords" type="text" name="Fav_keywords" maxlength="100" placeholder="Enter Keywords.." required  />-->
+
+
+            <!--<label for="num_limits">Count: </label>-->
+            <!--<input id="num_limits" type="text" name="num_limits" maxlength="100" required />-->
+
+
+            </table>
+        </form>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+
+
+
+<div id='section' class="row">
+    <div class="col-md-8">
+        <table style="width:102%" cellspacing="0" cellpadding="1" border="1" width="300">
+            <tr >
+                <th>  Keywords</th>
+                <th> Quantity </th>
+                <th> Operation </th>
+
+            </tr>
+
+            {%for user in object%}
+            <tr>
+                <td>
+                    {{user.Fav_keywords}}
+
+                </td>
+
+
+                <td>
+                    {{user.num_limits}}
+
+                </td>
+
+                <td>
+                    <a href="http://127.0.0.1:8000/home_page/edit/{{user.id}}/"><p><span class="glyphicon glyphicon-pencil"></span></p></a>
+
+                </td>
+
+                <td>
+                    <a href="http://127.0.0.1:8000/home_page/Delete_selective/{{user.id}}/"><p style="margin-left: -120px;"><span class="glyphicon glyphicon-remove-circle"></span></p></a>
+                </td>
+
+                 <!--<td>-->
+                    <!--<p>  {{form_select.filter_by}} </p>-->
+
+                <!--</td>-->
+
+
+            </tr>
+            {%endfor%}
+
+        </table>
+
+    </div>
+    <div class="col-md-4">
+
+
+    </div>
+
+</div>
+
+<!--<form>-->
+    <!--<select name="filter_by" id="id_filter_by" style="background-color: #3071a9; padding: 6px 12px;border-radius: 5px">-->
+        <!--<option>Please Choose</option>-->
+        <!--<option value="recent">recent</option>-->
+        <!--<option value="popular">popular</option>-->
+        <!--<option value="mixed">mixed</option>-->
+    <!--</select>-->
+    <!--<button  type = "submit" style="background-color: #3071a9; padding: 6px 17px;border-radius: 5px">Submit</button>-->
+<!--</form>-->
+
+<a class="scroll" href="{%url 'Twitter_Bot:Fav' %}"><input type="button" class="btn btn-primary" value="Favourite tweets" style="BORDER-RADIUS: 22PX;width: 135px;FLOAT: right;margin-right: 570px;margin-right: 464px;margin-top: 15px;"/></a>
+
+
+  <a href="{%url 'Twitter_Bot:Clear_Data'%}"><input type="button" class="btn btn-primary" value="Clear Data" style="BORDER-RADIUS: 22PX;width: 135px;margin-top: 15px;"></a>
+{% endblock %}

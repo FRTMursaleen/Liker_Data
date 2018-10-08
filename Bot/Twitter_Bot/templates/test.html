@@ -1,0 +1,245 @@
+{% extends 'main.html' %}
+
+    {% block content %}
+
+
+        <div class="jumbotron text-center"  style="width:99%; border-radius:0px;background-color:#557A95; margin-left:0px;margin-bottom:11px;margin-top:2px">
+            <div id="topper">
+                <!--<h2 class="text-center"><a href="{%url 'Twitter_Bot:Follows' %}">check follows</a></h2>-->
+                <!--<h2 style="PADDING-LEFT: 40px;"><a href="http://127.0.0.1:8000/home_page/Like_Tweets_Data/">Tweets Data</a></h2>-->
+                <!--<h2 style="PADDING-LEFT: 40px;"><a href="http://127.0.0.1:8000/home_page/unlike_tweet/">Unlike Tweets</a></h2>-->
+            </div>
+
+        {% if form%}
+             {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" id="checker" style="color: #c21a1a;background-color:lightpink;font-size: 1.3em;width: 82%;margin-left: 75px;">{{ message }}</div>
+                    {% endfor %}
+             {% endif %}
+        {%endif%}
+            <div id="status_div">
+            </div>
+            <div id="blacklist">
+            </div>
+
+            <h2 class="text-left" id="fav_keywords"  style="margin-top:4%;color:white;">Add Favourite keywords</h2>
+            <form method='POST' class="form-horizontal">
+                  {%csrf_token%}
+                <div class="form-group">
+                    <label class="control-label col-xs-2">
+                        Keywords
+                    </label>
+
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control"  id="Fav_keyword"  name="Fav_keywords" placeholder="Enter Keywords" required  />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                     <label class="control-label col-xs-2">
+                         Number
+                     </label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" id="num_limits" name="num_limits" placeholder="Enter Number Limit" required  />
+                            </div>
+                </div>
+                <div class="col-sm-4">
+                    <input type="submit" class="btn btn-primary button" value="Submit" style="  float:left;margin-left: 65px;margin-top: 0px;">
+                </div>
+            </form>
+            <div id='section' class="scroller">
+
+            <table class="table table-bordered table-condensed " style="margin-bottom:0">
+                <tr>
+                    <th style="text-align:center;padding:2%; ">  Keywords</th>
+                    <th style="text-align:center;padding:2%;"> Quantity </th>
+                    <th style="text-align:center;padding:2%;"> Operation </th>
+                </tr>
+                {%for user in object%}
+                <tr class="text-center" style="height: 57px;">
+                    <td style="text-align:center;"> {{user.keyword.Fav_keywords}}</td>
+                    <td style="text-align:center;">{{user.num_limits}}</td>
+
+                        <!--<a href="http://127.0.0.1:8000/home_page/edit/{{user.id}}/"><p><span class="glyphicon glyphicon-pencil"  style="float: left;margin-bottom: 13px;margin-left: 55px;"></span></p></a>-->
+
+                    <td style="text-align:center;">
+                        <a href="{% url 'Twitter_Bot:delete_fav_data' user.id%}"><p style="margin-left:7px;"><span class="glyphicon glyphicon-remove-circle" style="float:center;margin-top:-19px;"></span></p></a>
+                    </td>
+                </tr>
+                 {%endfor%}
+            </table>
+            </div>
+        </div>
+
+
+
+        <div class="jumbotron text-center"  style="width: 99%;background-color:#557A95;margin-left:0px;margin-bottom:11px;margin-top:-1%;border-radius:0px">
+            <h2 class="text-left" id="res_keywords" style="margin-top:0;color: white;">Add Restricted keywords</h2>
+            <form method="POST" class="form-horizontal">
+                {%csrf_token%}
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Keywords</label>
+                    <div class="col-xs-10">
+                        <input type="text" id="Restrited_keywords" name="Restrited_keywords" class="form-control hold"  placeholder="Enter Restricted Keywords" required  />
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary button" value="Submit" style="  float:left;margin-left: 77px;margin-top: 0px;">
+            </form>
+            <div id='section1' class="scroller">
+             <table class="table table-bordered table-condensed" style="margin-bottom:0;">
+                 <tr>
+                    <th style="text-align:center;padding:2%;"> Restricted words </th>
+                    <th style="text-align:center;padding:2%;"> Operations </th>
+                </tr>
+
+                 {%for user in object_like%}
+                 <tr style="height: 26px;">
+                     <td style="text-align:center;"> {{user.keyword.Restrited_keywords}}</td>
+                     <td style="text-align:center;">
+                         <a href="{% url 'Twitter_Bot:delete_restricted_data' user.id%}"><p><span class="glyphicon glyphicon-remove-circle" style="margin-top:-36px;"></span></p></a>
+                     </td>
+                 </tr>
+                 {%endfor%}
+
+             </table>
+            </div>
+        </div>
+
+        <div class="jumbotron text-center"  style="width:99%;background-color:#557A95;margin-left:0px;margin-top:-1%;border-radius:0;margin-bottom: 11px" >
+            <h2 class="text-left" id="res" style="margin-top:2%;color: white;">Add Restricted Username</h2>
+            <form method='POST' class="form-horizontal">
+                {%csrf_token%}
+                <div class="form-group">
+                    <label class="control-label col-xs-2">Name</label>
+                    <div class="col-xs-10">
+                        <input type="text" id="block_users" name="block_users"  class="form-control hold"  placeholder="Enter Username"  required />
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary button" value="Submit" style="float:left;margin-left:77px;margin-top:0;">
+            </form>
+            <div class="Section" id="scroller">
+                <table class="table table-bordered table-condensed" style="margin-bottom:0;width: 100%;">
+                    <tr>
+                        <th style="text-align:center;padding:2%; "> Block User </th>
+                        <th style="text-align:center;padding:2%;"> Operation </th>
+                        <th style="text-align:center;padding:2%;"> Status </th>
+
+                    </tr >
+                    {%for user in object_block_user%}
+                    <tr style="height: 57px;">
+                        <td  style="padding-bottom: 23px;">{{user.black_list.block_users}} </td>
+                        <td>
+                            <a href="{% url 'Twitter_Bot:delete_data' user.id%}"><p><span class="glyphicon glyphicon-remove-circle" style="text-align:center;"></span></p></a>
+                        </td>
+                        <td>
+                            <p style="font-size:small; padding-bottom: 13px;">{{user.black_list.status}}</p>
+                        </td>
+
+                    </tr>
+                    {%endfor%}
+
+                </table>
+            </div>
+        </div>
+
+
+
+        <div class="jumbotron text-center"  style="width:99%;background-color:#557A95;margin-left:0px;margin-bottom: 11px;padding-top: 35px;padding-bottom:114px;margin-top:-1%;border-radius:0"  >
+            <h2 class="text-left" id="time" style="margin-top:2%;color: white;">Add Custom Time</h2>
+            <form class="form-horizontal" id="custom-time-form">
+                {%csrf_token%}
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"> Initial Time</label>
+                    <div class="col-xs-10">
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' id="initial_time"  name="initial_time"  class="form-control" placeholder="05/17/2018 02:30 PM" required />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"> Final Time</label>
+                    <div class="col-xs-10">
+                        <div class='input-group date' id='datetimepicker2'>
+                            <input type='text' id="final_time"  name="final_time" class="form-control" placeholder="05/17/2018 02:30 PM" required />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+         <input type="submit"  class="btn btn-primary button" value="Submit"  id="button_1" title="Enter time to enable below button"style="  float:left;margin-left: 79px;margin-top: 9px;">
+
+            </form>
+            {% if flag is False %}
+            <button type="button" onclick="foo()" id="move"  style="display: inline-block;margin-top:56px;width: 81%;font-size:29px;background-color:#000;color:white;font-size:35px;" disabled>Like Tweets</button>
+
+            {% elif flag is True %}
+                <button type="button" onclick="foo()" id="back2Top" style="background: lightslategrey;display: inline-block;margin-top: 56px;width: 81%; font-size: 29px;color:white;" >Like Tweets</button>
+            {% endif %}
+        </div>
+
+<div id="test"></div>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+
+
+function foo(){
+$('#status_div').html('<img src="/static/img/tenor.gif " alt="An image of the site logo" style="width: 210px;height:auto;margin-right:8%;">')
+$.ajax({
+  url: "{%url 'Twitter_Bot:perform' request.session.id %}",
+}).done(function() {
+  $('#status_div').html('')
+});
+}
+
+<!--function foo_1(){-->
+<!--$('#blacklist').html('<img src="/static/img/loader_file.gif " alt="Loading" style="width: 210px;height:auto;margin-right:44%;scrollTop(0)">')-->
+<!--$.ajax({-->
+  <!--url: "{%url 'Twitter_Bot:Follows' %}",-->
+<!--}).done(function() {-->
+  <!--$('#blacklist').html('')-->
+<!--});-->
+<!--}-->
+
+
+  $(function () {
+    $('#datetimepicker1').datetimepicker();
+ });
+  $(function () {
+    $('#datetimepicker2').datetimepicker();
+ });
+
+/*Scroll to top when arrow up clicked BEGIN*/
+$(window).scroll(function() {
+    var height = $(window).scrollTop();
+    if (height > 100) {
+        $('#back2Top').fadeIn();
+    } else {
+        $('#back2Top').fadeOut();
+    }
+});
+$(document).ready(function() {
+    $("#back2Top").click(function(event) {
+        event.preventDefault();
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+
+});
+ /*Scroll to top when arrow up clicked END*/
+
+</script>
+
+{% endblock %}

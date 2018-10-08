@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/main.css" />
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body>
+   {% if messages %}
+
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" style="text-align:center;color:red;background-color:lightpink;height: inherit;margin-bottom: 0;font-size:1.5em">{{ message }}</div>
+                    {% endfor %}
+
+              {% endif %}
+
+<section id="banner" style="background-color:#557A95;">
+    <a href="{%url 'Twitter_Bot:signout' %}"><input type="button" value="SIgnout"/></a>
+    {% if request.user.is_authenticated %}
+        <h2>Thanks<strong style="color:#a6acb2"> {{ request.user.username}} </strong> for login to get our services......</h2>
+        <p><strong style="color:#a6acb2"> {{ request.user.username}} </strong> Please Sign In with Twitter Account </p>
+    {% endif %}
+
+    <ul class="actions">
+        <li ><a href="{%url 'Twitter_Bot:verifier' %}"  class="button special">SignIn Twitter</a></li>
+    </ul>
+    {{context}}
+</section>
+
+</body>
+</html>

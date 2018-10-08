@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Like Tweets data</title>
+</head>
+    <!--<h2 style="text-align:center;"> Tweets Data</h2>-->
+<div id='section' class="scroller_data" style="margin-top: 10px;margin-left: 0;width:99%">
+    <table class="table table-bordered " style="margin-bottom:0;" cellspacing="27" cellpadding="26" border="1" width="311">
+        <tr style="color: green;">
+            <th> Like Tweet Text </th>
+            <th style="text-align:right;"> Twitter Handler </th>
+            <th style="text-align:right;">URL </th>
+            <th style="text-align:right;">Status </th>
+            <th style="text-align:right;">Delete </th>
+            <th style="text-align:right;">Like Date </th>
+        </tr>
+        {%for data in like_data%}
+        <tr>
+            <!--<td>-->
+                <!--<p style="font-size: 23px;color:green;">{{data.Account_id.Screen_Name}}</p>-->
+            <!--</td>-->
+
+             <td>
+                 <p>{{data.TweetContent.tweet_content}}
+             </td>
+             <td>
+                 <p>{{data.TweetContent.Name}}</p>
+             </td>
+             <td>
+
+                 <p><a href="https://twitter.com/statuses/{{data.TweetContent.tweet_id}}"><span class="glyphicon glyphicon-eye-open"></span></a></p>
+             </td>
+             <td>
+                 <p>{{data.TweetContent.status}}
+             </td>
+             <td>
+                 <!--http://127.0.0.1:8000/home_page/cheking/{{data.id}}/-->
+                 <a href="{% url 'Twitter_Bot:cheking' data.id %}"><span class="glyphicon glyphicon-remove"></span>
+                 </a>
+             </td>
+             <td>
+                <p style="color: green;">{{data.TweetContent.timestamp}}</p>
+             </td>
+        </tr>
+        {%endfor%}
+    </table>
+</div>
+
+{% endblock %}

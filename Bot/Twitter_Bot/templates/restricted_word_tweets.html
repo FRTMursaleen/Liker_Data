@@ -1,0 +1,92 @@
+{% extends 'base.html'  %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="POST" style="display:inline-block;">
+            {%csrf_token%}
+            <!--<h3>Enter Restricted keywords </h3>-->
+            <!--{{form|crispy}}-->
+
+             <table>
+                <tr>
+                    <th style="text-align:center;"><h3>Keywords </h3></th>
+
+                </tr>
+
+                 <tr>
+                     <td>
+
+                         <input id="Restrited_keywords" type="text" name="Restrited_keywords" maxlength="100" placeholder="Enter Keywords.." style="border-color:blue; border-radius:22px;" required  />
+
+                     </td>
+
+                      <td>
+                        <input type="submit" class="btn btn-primary" value="Submit" style="width: 112px;border-radius:22px; margin-left: 70px;">
+
+                      </td>
+                 </tr>
+             </table>
+        </form>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+
+
+<div id = 'section1' class="row">
+    <div class="col-md-12">
+        <table style="width:102%" cellspacing="1" cellpadding="2" border="1" width="300">
+            <tr>
+
+                <th> Id </th>
+                <th> Restricted words </th>
+                <th> Edit </th>
+                <th> Delete </th>
+            </tr>
+
+            {%for user in object%}
+            <tr>
+                <td>
+                    {{user.id}}
+                </td>
+
+                <td>
+                    {{user.Restrited_keywords}}
+                </td>
+
+                <td>
+                    <a href="http://127.0.0.1:8000/home_page/edit_restricted_words/{{user.id}}/"><p><span class="glyphicon glyphicon-pencil"></span></p></a>
+
+                </td>
+
+                <td>
+                    <a href="http://127.0.0.1:8000/home_page/Delete_restricted_words/{{user.id}}/"><p><span class="glyphicon glyphicon-remove-circle"></span></p></a>
+
+                </td>
+
+            </tr>
+            {%endfor%}
+
+        </table>
+    </div>
+</div>
+
+<form>
+    <select name="filter_by" id="id_filter_by" style="background-color: #3071a9; padding: 6px 12px;border-radius: 5px">
+        <option>Please Choose</option>
+        <option value="recent">recent</option>
+        <option value="popular">popular</option>
+        <option value="mixed">mixed</option>
+    </select>
+    <button  type = "submit" style="background-color: #3071a9; padding: 6px 17px;border-radius: 5px">Submit</button>
+</form>
+
+<a href="{%url 'Twitter_Bot:delete_all_restricted_words'%}"><button type="button" class="btn btn-primary">Clear Data</button></a>
+<a href="{%url 'Twitter_Bot:Liketweets_except_restricted_word' %}"><button type="button" class="btn btn-primary">Restricted Tweets </button></a>
+
+{% endblock %}

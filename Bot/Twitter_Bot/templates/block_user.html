@@ -1,0 +1,56 @@
+{% extends 'base.html'  %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="POST" >
+            {%csrf_token%}
+            {{form|crispy}}
+            <input type="submit" class="btn btn-default" value="Name added">
+        </form>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="ex1 col-md-8">
+        <table style="width:102%" cellspacing="1" cellpadding="2" border="1" width="300">
+            <tr>
+
+                <th> Id </th>
+                <th> Block User </th>
+                <th> Delete </th>
+
+            </tr>
+
+            {%for user in object%}
+            <tr>
+                <td>
+                    <p> {{user.id}} </p>
+                </td>
+
+                <td>
+                    <p> {{user.block_users}} </p>
+                </td>
+
+                <td>
+                    <a href="http://127.0.0.1:8000/home_page/Delete_Block_user/{{user.id}}/"><p><span class="glyphicon glyphicon-remove-circle"></span></p></a>
+                </td>
+
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+        <div class="col-md-4">
+                <a href="{%url 'Twitter_Bot:Clear_restrictesd_words'%}"><button type="button" class="btn btn-primary">Clear All Data</button></a>
+
+        </div>
+
+</div>
+
+{% endblock %}

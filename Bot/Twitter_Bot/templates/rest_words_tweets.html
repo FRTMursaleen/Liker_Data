@@ -1,0 +1,92 @@
+{% extends 'base.html'  %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div>
+    <h1>Your tweets have been favourited in which Fav keyword is present </h1>
+</div>
+
+<div>
+
+
+<div id='section' class="row">
+    <div class="col-md-4">
+        <table style="width:102%" cellspacing="0" cellpadding="3" border="1" width="400">
+            <tr >
+                <th > Tweet Text </th>
+                <th > Url </th>
+            </tr>
+
+            {%for tweet in data%}
+            <tr>
+                <td>
+                    {{tweet.text}}
+
+                </td>
+
+                <td>
+                    <p><a href="https://twitter.com/statuses/{{tweet.id}}"> Click Here</a></p>
+
+                </td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <table style="width:102%" cellspacing="0" cellpadding="3" border="1" width="400">
+            <tr >
+                <th > Tweet Text </th>
+                <th > Url </th>
+            </tr>
+
+            {%for tweet in data_unlike%}
+            <tr>
+                <td>
+                    {{tweet.text}}
+
+                </td>
+
+                <td>
+                    <p><a href="https://twitter.com/statuses/{{tweet.id}}"> Click Here</a></p>
+
+                </td>
+            </tr>
+            {%endfor%}
+
+        </table>
+
+    </div>
+
+
+      <div class="col-md-4">
+        <table style="width:102%" cellspacing="0" cellpadding="3" border="1" width="400">
+            <tr >
+                <th > Less Like Text </th>
+                <th > Url </th>
+            </tr>
+
+            {%for tweet in less_like_data%}
+            <tr>
+                <td>
+                    {{tweet.text}}
+
+                </td>
+
+                <td>
+                    <p><a href="https://twitter.com/statuses/{{tweet.id}}"> Click Here</a></p>
+
+                </td>
+            </tr>
+            {%endfor%}
+
+        </table>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
