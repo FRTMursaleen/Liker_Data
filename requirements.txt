@@ -3,7 +3,7 @@ billiard==3.5.0.4
 celery==4.0.1
 certifi==2018.4.16
 chardet==3.0.4
-Django==2.0.7
+Django==2.2.10
 idna==2.7
 kombu==4.2.1
 oauthlib==2.1.0
